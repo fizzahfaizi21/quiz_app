@@ -3,7 +3,14 @@ import '../models/question.dart';
 import '../services/api_service.dart';
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({Key? key}) : super(key: key);
+  final int category;
+  final String categoryName;
+
+  const QuizScreen({
+    Key? key,
+    this.category = 9,
+    this.categoryName = 'General Knowledge',
+  }) : super(key: key);
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -26,7 +33,9 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Future<void> _loadQuestions() async {
     try {
-      final questions = await ApiService.fetchQuestions();
+      final questions = await ApiService.fetchQuestions(
+        category: widget.category,
+      );
       setState(() {
         _questions = questions;
         _loading = false;
@@ -106,14 +115,14 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) {
     if (_loading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Quiz App')),
+        appBar: AppBar(title: Text('${widget.categoryName} Quiz')),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     if (_questions.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Quiz App')),
+        appBar: AppBar(title: Text('${widget.categoryName} Quiz')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -132,7 +141,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
     if (_currentQuestionIndex >= _questions.length) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Quiz App')),
+        appBar: AppBar(title: Text('${widget.categoryName} Quiz')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -151,6 +160,16 @@ class _QuizScreenState extends State<QuizScreen> {
                 onPressed: _restartQuiz,
                 child: const Text('Play Again'),
               ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Choose Another Category'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.grey,
+                ),
+              ),
             ],
           ),
         ),
@@ -159,7 +178,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
     final question = _questions[_currentQuestionIndex];
     return Scaffold(
-      appBar: AppBar(title: const Text('Quiz App')),
+      appBar: AppBar(title: Text('${widget.categoryName} Quiz')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
