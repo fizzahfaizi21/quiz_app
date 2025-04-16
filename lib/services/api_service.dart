@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'lib/models/question.dart';
+import '../models/question.dart'; // Fix the import path
 
 class ApiService {
   static Future<List<Question>> fetchQuestions({

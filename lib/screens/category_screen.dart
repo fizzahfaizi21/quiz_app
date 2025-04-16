@@ -32,7 +32,7 @@ class CategoryScreen extends StatelessWidget {
           children: [
             Text(
               'Choose a Category',
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 20),
             Expanded(

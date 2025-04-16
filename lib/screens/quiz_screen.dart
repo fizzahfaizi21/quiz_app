@@ -97,7 +97,7 @@ class _QuizScreenState extends State<QuizScreen> {
         onPressed: _answered ? null : () => _submitAnswer(option),
         child: Text(option),
         style: ElevatedButton.styleFrom(
-          primary: _answered
+          backgroundColor: _answered
               ? (isCorrect
                   ? Colors.green
                   : _selectedAnswer == option
@@ -148,12 +148,12 @@ class _QuizScreenState extends State<QuizScreen> {
             children: [
               Text(
                 'Quiz Finished!',
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 16),
               Text(
                 'Your Score: $_score/${_questions.length}',
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 24),
               ElevatedButton(
@@ -167,7 +167,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 },
                 child: const Text('Choose Another Category'),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.grey,
+                  backgroundColor: Colors.grey,
                 ),
               ),
             ],
